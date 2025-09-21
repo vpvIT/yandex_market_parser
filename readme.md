@@ -13,6 +13,8 @@ Instal dependencies and build the project
   npm run build
 
 ```
+
+Also required google chrome
     
 ## Environment Variables
 
