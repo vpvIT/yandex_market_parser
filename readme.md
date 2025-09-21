@@ -1,8 +1,9 @@
 
 # Yandex market bot
 
+Telegram bot for track to track the minimum price for a product on Yandex Market
 
-
+The bot can also be used to notify you that your store's product is currently not the cheapest.
 
 ## Installation
 
