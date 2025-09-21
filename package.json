@@ -1,0 +1,26 @@
+{
+  "name": "yandex-market-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "dev": "nodemon --watch src/ --exec npx tsx src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^22.15.29",
+    "nodemon": "^3.1.7",
+    "tsc": "^2.0.4",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "grammy": "^1.36.1",
+    "locate-app": "^2.5.0",
+    "puppeteer-core": "^24.22.0"
+  }
+}
