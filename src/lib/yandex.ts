@@ -2,15 +2,23 @@ import puppeteer, { Browser, ElementHandle, Page } from 'puppeteer-core';
 import { locateChrome } from 'locate-app';
 
 import delay from './utils/delay';
+import config from '../config';
+import proxyController from './proxyController';
+import ProxyAgent from './ProxyAgent';
 
 export class Yandex {
     private page: Page;
     private browser: Browser;
+    private proxy: null | ProxyAgent = null;
     async start() {
         if (this.browser) {
             await this.browser.close();
-            //realese proxy here
+            if(this.proxy) {
+                await this.proxy.release();
+                this.proxy = null;
+            }
         }
+        const proxy = config.proxies.length > 0 ? await proxyController.get() : null;
         const pathToChrome = await locateChrome();
         const browser = await puppeteer.launch({
             headless: false,
@@ -20,7 +28,10 @@ export class Yandex {
                 "--disable-blink-features=AutomationControlled",
                 '--start-maximized',
                 '--useAutomationExtension=false',
-                '--no-sandbox'
+                '--no-sandbox',
+                ...(proxy? [
+                    `--proxy-server=${proxy.getUrl()}`
+                ] : [])
             ],
             executablePath: pathToChrome
         });

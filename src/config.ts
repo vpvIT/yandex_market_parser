@@ -50,12 +50,18 @@ if(parseLinks && parseLinks === '1') {
     }
 }
 
-const shopName: string = process.env.SHOP_NAME || '';
+const shopName: string = (process.env.SHOP_NAME || '').toLowerCase().trim();
+
+const linkCheckDelay: number = +(process.env.LINK_CHECK_DELAY || '0');
 
 if(parseLinks && parseLinks === '1') {
     if(!shopName) {
         console.error('SHOP_NAME is not specified!');
         process.exit();
+    }
+    if(isNaN(linkCheckDelay) || linkCheckDelay === 0) {
+        console.error('LINK_CHECK_DELAY is not specified or incorrect!');
+        process.exit(); 
     }
 }
 
@@ -94,6 +100,7 @@ const config = {
     links,
     proxies,
     shopName,
+    linkCheckDelay,
     threadsCount
 };
 

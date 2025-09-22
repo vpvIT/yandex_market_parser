@@ -1,13 +1,13 @@
 
 # Yandex market bot
 
-Telegram bot for track to track the minimum price for a product on Yandex Market
+Telegram bot for track to track the minimum price for a product on Yandex Market.
 
 The bot can also be used to notify you that your store's product is currently not the cheapest.
 
 ## Installation
 
-Instal dependencies and build the project
+Install dependencies and build the project
 
 ```bash
   npm i
@@ -31,12 +31,13 @@ Specify optional variables if necessary.
 
 `PARSE_LINKS` - parse links from file 1 - yes or 0 - no, default=0
 
-`LINKS_FILE_NAME` - name of links files
+`LINKS_FILE_NAME` - name of links files, required if PARSE_LINKS = 1
 
-`THREADS_COUNT` - amount of threads, default=1
+`THREADS_COUNT` - amount of threads, required if PARSE_LINKS = 1, default=1
 
-`SHOP_NAME` - name of the your shop
+`SHOP_NAME` - name of the your shop, required if PARSE_LINKS = 1
 
+`LINK_CHECK_DELAY` - delay between links, required if PARSE_LINKS = 1
 
 
 

@@ -1,6 +1,8 @@
+import bot from "../bot";
 import config from "../config";
 import delay from "./utils/delay";
 import { Yandex } from "./yandex";
+import { InlineKeyboard } from "grammy";
 
 class Threads {
     private threads: {
@@ -33,13 +35,22 @@ class Threads {
                             await this.threads[i].yandex.start(); 
                         }
                         const {err, data} = await this.threads[i].yandex.processLink(links[j], true);
-                        if(!err) this.threads[i].errors = 0;
+                        if(!err) {
+                            this.threads[i].errors = 0;
+                            if(data.shop.toLowerCase() !== config.shopName) {
+                                for(let k=0; k<config.allowedUsers.length; k++) {
+                                    await bot.api.sendMessage(config.allowedUsers[k], `Ваша цена не самая маленькая`, {
+                                        reply_markup: new InlineKeyboard().url(`Товар`, links[j])
+                                    }).catch(() => null);
+                                }
+                            }
+                        }
                         else this.threads[i].errors = this.threads[i].errors + 1;
+                        await delay(config.linkCheckDelay * 1000);
                     }
                 })(tasks[i]));
             }
             await Promise.all(queu);
-            await delay(60_000);
         }
     }
 }

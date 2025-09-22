@@ -14,8 +14,7 @@
   "devDependencies": {
     "@types/node": "^22.15.29",
     "nodemon": "^3.1.7",
-    "tsc": "^2.0.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
