@@ -7,9 +7,9 @@ export class ProxyAgent {
     private proxy: string;
     async init(proxy: string) {
         this.proxyRaw = proxy;
-        this.proxy = await anonymizeProxy(`http://${this.proxyRaw}`);
+        this.proxy = await anonymizeProxy(`http://${this.proxyRaw}`);;
     }
-    async getUrl() {
+    getUrl() {
         return this.proxy;
     }
     async release() {

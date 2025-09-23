@@ -74,7 +74,7 @@ if(proxyFileName) {
         const data = readFileSync(process.cwd()+'/files/'+proxyFileName).toString();
         const proxiesRaw = data.split('\n');
         for(let i=0; i<proxiesRaw.length; i++) {
-            const [ip, port, username, password] = proxiesRaw[i].replaceAll('\r', '').trim().split(':');
+            const [ip, port, username, password] = proxiesRaw[i].replaceAll('\r', '').trim().split(':').map(item => item.trim());
             if(!ip || !port || !username || !password) {
                 continue;
             }

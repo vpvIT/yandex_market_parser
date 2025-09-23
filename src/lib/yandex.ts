@@ -29,9 +29,7 @@ export class Yandex {
                 '--start-maximized',
                 '--useAutomationExtension=false',
                 '--no-sandbox',
-                ...(proxy? [
-                    `--proxy-server=${proxy.getUrl()}`
-                ] : [])
+                ...(proxy? [`--proxy-server=${proxy.getUrl()}`] : [])
             ],
             executablePath: pathToChrome
         });
