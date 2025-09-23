@@ -10,11 +10,15 @@ if(!botToken) {
     process.exit(0);
 }
 
-const allowedUsersRaw = process.env.ALLOWED_USERS;
+const groupId: string = process.env.GROUP_ID || '';
 
-if(!allowedUsersRaw) {
-    console.error('ALLOWED_USERS is not specified!');
-    process.exit();
+const allowedUsersRaw = process.env.ALLOWED_USERS || '';
+
+if(!groupId) {
+    if(!allowedUsersRaw) {
+        console.error('GROUP_ID or ALLOWED_USERS must be specified!');
+        process.exit();
+    }
 }
 
 const allowedUsers = allowedUsersRaw.split(',').map(userId => userId.trim());
@@ -101,7 +105,8 @@ const config = {
     proxies,
     shopNames,
     linkCheckDelay,
-    threadsCount
+    threadsCount,
+    groupId
 };
 
 export default config;

@@ -56,8 +56,12 @@ Object.defineProperty(navigator, 'languages', { get: () => ['en-US', 'en'] });`)
             shop: string;
         };
     }> {
-        if (!link.endsWith('?how=aprice')) {
-            link = link + '?how=aprice';
+        if (!link.endsWith('how=aprice')) {
+            let filter = 'how=aprice';
+            if(!link.includes('?')) {
+                filter = '?' + filter;
+            }
+            link = link + filter;
         }
         this.page.goto(link, {
             waitUntil: 'domcontentloaded',

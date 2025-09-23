@@ -19,11 +19,15 @@ Also required google chrome
     
 ## Environment Variables
 
-Set required variables in .env file
+Set required variables in .env file.
 
 `BOT_TOKEN` - telegram bot token
 
+Specify one of this variables.
+
 `ALLOWED_USERS` - telegram users ids list, example: 1234, 5678
+
+`GROUP_ID` - telegram group ids
 
 Specify optional variables if necessary.
 

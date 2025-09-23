@@ -38,10 +38,22 @@ class Threads {
                         if(!err) {
                             this.threads[i].errors = 0;
                             if(!config.shopNames.includes(data.shop.toLowerCase())) {
-                                for(let k=0; k<config.allowedUsers.length; k++) {
-                                    await bot.api.sendMessage(config.allowedUsers[k], `Ваша цена не самая маленькая`, {
-                                        reply_markup: new InlineKeyboard().url(`Товар`, links[j])
+                                const urlParts = links[j].split('/');
+                                let out = `Ваша цена не самая маленькая!\n`;
+                                out+= `<b>Магазин:</b> ${data.shop}\n`;
+                                out+= `<b>Товар: </b> ${urlParts[4]}`;
+                                if(config.groupId) {
+                                    await bot.api.sendMessage(config.groupId, out, {
+                                        reply_markup: new InlineKeyboard().url(`Товар`, links[j]),
+                                        parse_mode: "HTML"
                                     }).catch(() => null);
+                                } else {
+                                    for(let k=0; k<config.allowedUsers.length; k++) {
+                                        await bot.api.sendMessage(config.allowedUsers[k], out, {
+                                            reply_markup: new InlineKeyboard().url(`Товар`, links[j]),
+                                        parse_mode: "HTML"
+                                        }).catch(() => null);
+                                    }
                                 }
                             }
                         }
