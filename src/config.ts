@@ -50,13 +50,13 @@ if(parseLinks && parseLinks === '1') {
     }
 }
 
-const shopName: string = (process.env.SHOP_NAME || '').toLowerCase().trim();
+const shopNames: string[] = (process.env.SHOP_NAMES ?  process.env.SHOP_NAMES.split(',') : []).map(el => el.trim().toLowerCase());
 
 const linkCheckDelay: number = +(process.env.LINK_CHECK_DELAY || '0');
 
 if(parseLinks && parseLinks === '1') {
-    if(!shopName) {
-        console.error('SHOP_NAME is not specified!');
+    if(shopNames.length === 0) {
+        console.error('SHOP_NAMES is not specified!');
         process.exit();
     }
     if(isNaN(linkCheckDelay) || linkCheckDelay === 0) {
@@ -99,7 +99,7 @@ const config = {
     allowedUsers,
     links,
     proxies,
-    shopName,
+    shopNames,
     linkCheckDelay,
     threadsCount
 };

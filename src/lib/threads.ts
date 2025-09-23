@@ -37,7 +37,7 @@ class Threads {
                         const {err, data} = await this.threads[i].yandex.processLink(links[j], true);
                         if(!err) {
                             this.threads[i].errors = 0;
-                            if(data.shop.toLowerCase() !== config.shopName) {
+                            if(!config.shopNames.includes(data.shop.toLowerCase())) {
                                 for(let k=0; k<config.allowedUsers.length; k++) {
                                     await bot.api.sendMessage(config.allowedUsers[k], `Ваша цена не самая маленькая`, {
                                         reply_markup: new InlineKeyboard().url(`Товар`, links[j])

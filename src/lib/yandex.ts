@@ -149,7 +149,7 @@ Object.defineProperty(navigator, 'languages', { get: () => ['en-US', 'en'] });`)
         if (!shopContainer) {
             return errorResponse;
         }
-        const shop = await shopContainer.evaluate(el => el.textContent);
+        const shop = (await shopContainer.evaluate(el => el.textContent)).trim();
         return {
             err: false,
             data: {

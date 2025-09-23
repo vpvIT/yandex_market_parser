@@ -35,7 +35,7 @@ Specify optional variables if necessary.
 
 `THREADS_COUNT` - amount of threads, required if PARSE_LINKS = 1, default=1
 
-`SHOP_NAME` - name of the your shop, required if PARSE_LINKS = 1
+`SHOP_NAMES` - shop names list, required if PARSE_LINKS = 1, example SHOP1, SHOP2, SHOP3
 
 `LINK_CHECK_DELAY` - delay between links, required if PARSE_LINKS = 1
 
