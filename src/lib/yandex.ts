@@ -60,6 +60,8 @@ Object.defineProperty(navigator, 'languages', { get: () => ['en-US', 'en'] });`)
             let filter = 'how=aprice';
             if(!link.includes('?')) {
                 filter = '?' + filter;
+            } else {
+                filter = '&' + filter;
             }
             link = link + filter;
         }

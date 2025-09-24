@@ -26,38 +26,43 @@ class Threads {
             const chunk = config.links.slice(i, i + chunkSize);
             tasks.push(chunk);
         }
-        while(true) {
+        while (true) {
             const queu: Promise<void>[] = [];
-            for(let i=0; i<tasks.length; i++) {
+            for (let i = 0; i < tasks.length; i++) {
                 queu.push((async (links: string[]) => {
-                    for(let j=0; j<links.length; j++) {
-                        if(this.threads[i].errors === 3) {
-                            await this.threads[i].yandex.start(); 
+                    for (let j = 0; j < links.length; j++) {
+                        if (this.threads[i].errors === 3) {
+                            await this.threads[i].yandex.start();
                         }
-                        const {err, data} = await this.threads[i].yandex.processLink(links[j], true);
-                        if(!err) {
-                            this.threads[i].errors = 0;
-                            if(!config.shopNames.includes(data.shop.toLowerCase())) {
-                                const urlParts = links[j].split('/');
-                                let out = `Ваша цена не самая маленькая!\n`;
-                                out+= `<b>Магазин:</b> ${data.shop}\n`;
-                                out+= `<b>Товар: </b> ${urlParts[4]}`;
-                                if(config.groupId) {
-                                    await bot.api.sendMessage(config.groupId, out, {
-                                        reply_markup: new InlineKeyboard().url(`Товар`, links[j]),
-                                        parse_mode: "HTML"
-                                    }).catch(() => null);
-                                } else {
-                                    for(let k=0; k<config.allowedUsers.length; k++) {
-                                        await bot.api.sendMessage(config.allowedUsers[k], out, {
+                        try {
+                            const { err, data } = await this.threads[i].yandex.processLink(links[j], true);
+                            if (!err) {
+                                this.threads[i].errors = 0;
+                                if (!config.shopNames.includes(data.shop.toLowerCase())) {
+                                    const urlParts = links[j].split('/');
+                                    let out = `Ваша цена не самая маленькая!\n`;
+                                    out += `<b>Магазин:</b> ${data.shop}\n`;
+                                    out += `<b>Товар: </b> ${urlParts[4]}`;
+                                    if (config.groupId) {
+                                        await bot.api.sendMessage(config.groupId, out, {
                                             reply_markup: new InlineKeyboard().url(`Товар`, links[j]),
-                                        parse_mode: "HTML"
+                                            parse_mode: "HTML"
                                         }).catch(() => null);
+                                    } else {
+                                        for (let k = 0; k < config.allowedUsers.length; k++) {
+                                            await bot.api.sendMessage(config.allowedUsers[k], out, {
+                                                reply_markup: new InlineKeyboard().url(`Товар`, links[j]),
+                                                parse_mode: "HTML"
+                                            }).catch(() => null);
+                                        }
                                     }
                                 }
                             }
+                            else this.threads[i].errors = this.threads[i].errors + 1;
+                        } catch (err) {
+                            console.log(err);
+                            await this.threads[i].yandex.start();
                         }
-                        else this.threads[i].errors = this.threads[i].errors + 1;
                         await delay(config.linkCheckDelay * 1000);
                     }
                 })(tasks[i]));

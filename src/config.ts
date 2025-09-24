@@ -47,7 +47,7 @@ if(parseLinks && parseLinks === '1') {
     }
     try {
         const data = readFileSync(process.cwd()+'/files/'+fileName).toString();
-        links = data.split('\n');
+        links = data.split('\n').filter(link => link.length !== 0 && link.startsWith(`https://market.yandex.ru/p/`));
     } catch {
         console.error('Links file read error');
         process.exit();
@@ -97,6 +97,8 @@ if(proxies.length !== 0 && threadsCount > proxies.length) {
     console.error('THREADS_COUNT must be less than proxies amount');
     process.exit();
 }
+
+console.log(links);
 
 const config = {
     botToken,
