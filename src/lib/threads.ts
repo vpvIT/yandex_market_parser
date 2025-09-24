@@ -9,6 +9,7 @@ class Threads {
         yandex: Yandex;
         errors: number;
     }[] = [];
+    private checkTimes: Record<string, number> = {};
     async init() {
         for (let i = 0; i < config.threadsCount; i++) {
             const yandex = new Yandex();
@@ -31,6 +32,13 @@ class Threads {
             for (let i = 0; i < tasks.length; i++) {
                 queu.push((async (links: string[]) => {
                     for (let j = 0; j < links.length; j++) {
+                        if (this.checkTimes[links[j]]) {
+                            const checkTime = this.checkTimes[links[j]] + config.linkCheckDelay * 60;
+                            if (checkTime > Math.floor(Date.now() / 1000)) {
+                                await delay(1_000);
+                                continue;
+                            }
+                        }
                         if (this.threads[i].errors === 3) {
                             await this.threads[i].yandex.start();
                         }
@@ -63,7 +71,7 @@ class Threads {
                             console.log(err);
                             await this.threads[i].yandex.start();
                         }
-                        await delay(config.linkCheckDelay * 1000);
+                        this.checkTimes[links[j]] = Math.floor(Date.now() / 1000);
                     }
                 })(tasks[i]));
             }

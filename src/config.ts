@@ -98,8 +98,6 @@ if(proxies.length !== 0 && threadsCount > proxies.length) {
     process.exit();
 }
 
-console.log(links);
-
 const config = {
     botToken,
     allowedUsers,

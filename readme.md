@@ -41,7 +41,7 @@ Specify optional variables if necessary.
 
 `SHOP_NAMES` - shop names list, required if PARSE_LINKS = 1, example SHOP1, SHOP2, SHOP3
 
-`LINK_CHECK_DELAY` - delay between links, required if PARSE_LINKS = 1
+`LINK_CHECK_DELAY` - delay between link checks in minutes, required if PARSE_LINKS = 1
 
 
 
