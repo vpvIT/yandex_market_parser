@@ -47,6 +47,7 @@ class Threads {
                             if (!err) {
                                 this.threads[i].errors = 0;
                                 if (!config.shopNames.includes(data.shop.toLowerCase())) {
+                                    this.checkTimes[links[j]] = Math.floor(Date.now() / 1000);
                                     const urlParts = links[j].split('/');
                                     let out = `Ваша цена не самая маленькая!\n`;
                                     out += `<b>Магазин:</b> ${data.shop}\n`;
@@ -64,6 +65,7 @@ class Threads {
                                             }).catch(() => null);
                                         }
                                     }
+                                    await delay(10_000);
                                 }
                             }
                             else this.threads[i].errors = this.threads[i].errors + 1;
@@ -71,7 +73,7 @@ class Threads {
                             console.log(err);
                             await this.threads[i].yandex.start();
                         }
-                        this.checkTimes[links[j]] = Math.floor(Date.now() / 1000);
+                        await delay(10_000);
                     }
                 })(tasks[i]));
             }
