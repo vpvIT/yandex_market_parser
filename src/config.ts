@@ -69,6 +69,15 @@ if(parseLinks && parseLinks === '1') {
     }
 }
 
+const notificationColdown = +(process.env.NOTIFICATION_COLDOWN || '0');
+
+if(parseLinks && parseLinks === '1') {
+    if(notificationColdown === 0 || isNaN(notificationColdown)) {
+        console.error('NOTIFICATION_COLDOWN is not specified or incorrect!');
+        process.exit(); 
+    }
+}
+
 const proxies: string[]= [];
 
 const proxyFileName = process.env.PROXY_FILE_NAME;
@@ -106,7 +115,8 @@ const config = {
     shopNames,
     linkCheckDelay,
     threadsCount,
-    groupId
+    groupId,
+    notificationColdown
 };
 
 export default config;

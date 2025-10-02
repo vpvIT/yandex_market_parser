@@ -33,9 +33,8 @@ class Threads {
                 queu.push((async (links: string[]) => {
                     for (let j = 0; j < links.length; j++) {
                         if (this.checkTimes[links[j]]) {
-                            const checkTime = this.checkTimes[links[j]] + config.linkCheckDelay * 60;
+                            const checkTime = this.checkTimes[links[j]] + config.notificationColdown * 60;
                             if (checkTime > Math.floor(Date.now() / 1000)) {
-                                await delay(1_000);
                                 continue;
                             }
                         }
@@ -65,7 +64,7 @@ class Threads {
                                             }).catch(() => null);
                                         }
                                     }
-                                    await delay(10_000);
+                                    await delay(config.linkCheckDelay * 1000);
                                 }
                             }
                             else this.threads[i].errors = this.threads[i].errors + 1;
@@ -73,7 +72,7 @@ class Threads {
                             console.log(err);
                             await this.threads[i].yandex.start();
                         }
-                        await delay(10_000);
+                        await delay(config.linkCheckDelay * 1000);
                     }
                 })(tasks[i]));
             }
