@@ -19,7 +19,7 @@ Also required google chrome
     
 ## Environment Variables
 
-Set required variables in .env file.
+Rename .env.example and set required variables in .env file.
 
 `BOT_TOKEN` - telegram bot token
 
