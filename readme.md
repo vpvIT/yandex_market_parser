@@ -1,5 +1,5 @@
 
-# Yandex market bot
+# Yandex market parser
 
 Telegram bot for track to track the minimum price for a product on Yandex Market.
 
